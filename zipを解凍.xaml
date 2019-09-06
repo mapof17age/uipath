@@ -93,7 +93,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <ui:PathExists DisplayName="パスの有無を確認" Exists="[unzip_finished]" sap:VirtualizedContainerService.HintSize="334,89" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[zip_path]" PathType="File" />
-        <Delay DisplayName="待機" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
+        <Delay DisplayName="待機" Duration="00:00:03" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
       </Sequence>
     </DoWhile>
     <InvokeMethod DisplayName="メソッドを呼び出し_解凍_zip" sap:VirtualizedContainerService.HintSize="484,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="ExtractToDirectory" TargetType="sic:ZipFile">
