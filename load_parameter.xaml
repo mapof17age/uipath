@@ -69,7 +69,7 @@
           <av:PointCollection x:Key="ConnectorLocation">300,548.5 300,576.5</av:PointCollection>
         </scg1:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="parameterファイル内のパスが存在するかチェック_Excel アプリケーション スコープ #024" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="[parameter_path]">
+      <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="parameterファイル内のパスが存在するかチェック_Excel アプリケーション スコープ #024" sap:VirtualizedContainerService.HintSize="965,1767" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="[parameter_path]">
         <ui:ExcelApplicationScope.Body>
           <ActivityAction x:TypeArguments="ui:WorkbookApplication">
             <ActivityAction.Argument>
@@ -510,7 +510,7 @@ parameter_path]</InArgument>
           <av:PointCollection x:Key="ConnectorLocation">300,155.5 300,227.5</av:PointCollection>
         </scg1:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="メッセージをログ" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;「load_parameter」を開始&quot;]">
+      <ui:LogMessage DisplayName="メッセージをログ" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;「load_parameter」を開始&quot;]">
         <sap:WorkflowViewStateService.ViewState>
           <scg1:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -524,21 +524,6 @@ parameter_path]</InArgument>
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
-    <FlowStep>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg1:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">530,229</av:Point>
-          <av:Size x:Key="ShapeSize">200,22</av:Size>
-        </scg1:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <Throw DisplayName="スロー" Exception="[New Exception(&quot;parameterファイルが見つかりませんでした。&quot; + parameter_path)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg1:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg1:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </Throw>
-    </FlowStep>
     <x:Reference>__ReferenceID7</x:Reference>
   </Flowchart>
 </Activity>

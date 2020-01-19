@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="move_DT_rows" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="396,316" sap2010:WorkflowViewState.IdRef="move_DT_rows_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="DT_for_each_columns" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="396.8,372" sap2010:WorkflowViewState.IdRef="DT_for_each_columns_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -44,21 +44,30 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="move_DT_rows" sap:VirtualizedContainerService.HintSize="376,256" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="DT_for_each_columns" sap:VirtualizedContainerService.HintSize="376.8,312" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="copy_DT" />
-      <Variable x:TypeArguments="sd:DataTable" Name="paste_DT" />
+      <Variable x:TypeArguments="sd:DataTable" Name="config_DT" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeCode Code="'0行目を移動&#xA;paste_DT.ImportRow(copy_DT.Rows(0))&#xA;&#xA;'0行目を削除&#xA;copy_DT.Rows.RemoveAt(0)" ContinueOnError="{x:Null}" DisplayName="Invoke code" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
-      <ui:InvokeCode.Arguments>
-        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="copy_DT">[copy_DT]</InOutArgument>
-        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="paste_DT">[paste_DT]</InOutArgument>
-      </ui:InvokeCode.Arguments>
-    </ui:InvokeCode>
+    <ui:ForEach x:TypeArguments="sd:DataColumn" CurrentIndex="{x:Null}" DisplayName="繰り返し (コレクションの各要素)" sap:VirtualizedContainerService.HintSize="335.2,219.2" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[config_DT.Columns]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="sd:DataColumn">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataColumn" Name="col" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="本体" sap:VirtualizedContainerService.HintSize="200,84.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
   </Sequence>
 </Activity>
