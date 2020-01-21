@@ -6,7 +6,7 @@
   <this:initial_all_settings.config_path>
     <InArgument x:TypeArguments="x:String" />
   </this:initial_all_settings.config_path>
-  <sap:VirtualizedContainerService.HintSize>586.4,1554.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>586.4,1888</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
   <TextExpression.NamespacesForImplementation>
@@ -49,7 +49,7 @@
       <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
     </scg:Dictionary>
   </sap:WorkflowViewStateService.ViewState>
-  <Sequence sap2010:Annotation.AnnotationText="以下をチェック&#xA;･configファイルが存在するか&#xA;･configファイル内の変数のパスが存在するか&#xA;&#xA;問題なければ､Dictionary型変数｢config｣を生成" DisplayName="path_exist" sap:VirtualizedContainerService.HintSize="566.4,1494.4" sap2010:WorkflowViewState.IdRef="Sequence_31">
+  <Sequence sap2010:Annotation.AnnotationText="以下をチェック&#xA;･configファイルが存在するか&#xA;･シート名が正しいか&#xA;･列名が正しいか&#xA;･configファイル内の列が正しいか&#xA;&#xA;問題なければ､Dictionary型変数｢config｣を生成" DisplayName="path_exist" sap:VirtualizedContainerService.HintSize="566.4,1828" sap2010:WorkflowViewState.IdRef="Sequence_31">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Boolean" Name="config_exists" />
       <Variable x:TypeArguments="ui:WorkbookApplication" Name="config_wb" />
@@ -83,27 +83,103 @@
         </If.Else>
       </If>
     </Sequence>
-    <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Excel アプリケーション スコープ config" sap:VirtualizedContainerService.HintSize="524.8,660" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_7" Visible="False" WorkbookPath="[config_path]">
+    <ui:ExcelApplicationScope Password="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Excel アプリケーション スコープ config" sap:VirtualizedContainerService.HintSize="524.8,961.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_7" Visible="False" WorkbookPath="[config_path]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
           </ActivityAction.Argument>
-          <Sequence sap2010:Annotation.AnnotationText="configファイルから以下をチェック&#xA;･valueのパスが存在するか" DisplayName="Do" sap:VirtualizedContainerService.HintSize="375.2,550.4" sap2010:WorkflowViewState.IdRef="Sequence_32">
+          <Sequence sap2010:Annotation.AnnotationText="configファイルから以下をチェック&#xA;･シート｢settings｣が存在するか&#xA;･列名が正しいか&#xA;･valueのパスが存在するか" DisplayName="config_check" sap:VirtualizedContainerService.HintSize="241.6,852" sap2010:WorkflowViewState.IdRef="Sequence_32">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelReadRange AddHeaders="True" DataTable="[config_DT]" DisplayName="範囲を読み込み settings" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_6" SheetName="settings">
-              <ui:ExcelReadRange.Range>
-                <InArgument x:TypeArguments="x:String">
-                  <Literal x:TypeArguments="x:String" Value="" />
-                </InArgument>
-              </ui:ExcelReadRange.Range>
-            </ui:ExcelReadRange>
-            <Sequence sap2010:Annotation.AnnotationText="configファイルの列｢check path｣に何かしら文字が入っている行の&#xA;パスをチェック&#xA;パスが存在しない場合､スロー" DisplayName="パスの有無をチェック" sap:VirtualizedContainerService.HintSize="333.6,160.8" sap2010:WorkflowViewState.IdRef="Sequence_38">
+            <TryCatch sap2010:Annotation.AnnotationText="シート｢settings｣が存在するかチェック&#xA;シートが存在しない場合､スロー" DisplayName="トライ キャッチ シート｢settings｣が存在するか" sap:VirtualizedContainerService.HintSize="200,112.8" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <TryCatch.Try>
+                <ui:ExcelReadRange AddHeaders="True" DataTable="[config_DT]" DisplayName="範囲を読み込み settings" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_6" SheetName="settings">
+                  <ui:ExcelReadRange.Range>
+                    <InArgument x:TypeArguments="x:String">
+                      <Literal x:TypeArguments="x:String" Value="" />
+                    </InArgument>
+                  </ui:ExcelReadRange.Range>
+                </ui:ExcelReadRange>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,105.6" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <Throw DisplayName="スロー" Exception="[New BusinessRuleException(&quot;configファイル内に｢settings｣シートが存在しません&quot;)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_8" />
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+            <Sequence sap2010:Annotation.AnnotationText="configファイルの列目をチェック&#xA;列名は以下の4列の並びであること&#xA;name / value / description / check path&#xA;必要な列が存在しない場合､スロー" DisplayName="列名が正しいか" sap:VirtualizedContainerService.HintSize="200,192.8" sap2010:WorkflowViewState.IdRef="Sequence_36">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="scg:List(x:String)" Name="columns_name_list" />
+                <Variable x:TypeArguments="x:String" Name="columns_name" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="代入 New List" sap:VirtualizedContainerService.HintSize="483.2,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="scg:List(x:String)">[columns_name_list]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="scg:List(x:String)">[New List(of String)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:ForEach x:TypeArguments="sd4:DataColumn" CurrentIndex="{x:Null}" DisplayName="繰り返し (コレクションの各要素) config_DTの各列" sap:VirtualizedContainerService.HintSize="483.2,309.6" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[config_DT.Columns]">
+                <ui:ForEach.Body>
+                  <ActivityAction x:TypeArguments="sd4:DataColumn">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sd4:DataColumn" Name="col" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="本体 config_DTの各列" sap:VirtualizedContainerService.HintSize="241.6,175.2" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <AddToCollection x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="input: col.Name&#xA;&#xA;output:columns_name_list" Collection="[columns_name_list]" DisplayName="コレクションに追加 列名" sap:VirtualizedContainerService.HintSize="200,82.4" sap2010:WorkflowViewState.IdRef="AddToCollection`1_4" Item="[col.ToString]">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </AddToCollection>
+                    </Sequence>
+                  </ActivityAction>
+                </ui:ForEach.Body>
+              </ui:ForEach>
+              <If Condition="[String.Join(&quot;,&quot;,columns_name_list) = &quot;name,value,description,check path&quot;]" DisplayName="条件分岐" sap:VirtualizedContainerService.HintSize="483.2,209.6" sap2010:WorkflowViewState.IdRef="If_11">
+                <If.Else>
+                  <Throw DisplayName="スロー" Exception="[New BusinessRuleException(&quot;列名&quot;)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                </If.Else>
+              </If>
+            </Sequence>
+            <Sequence sap2010:Annotation.AnnotationText="configファイルの列｢check path｣に何かしら文字が入っている行の&#xA;パスをチェック&#xA;パスが存在しない場合､スロー" DisplayName="パスの有無をチェック" sap:VirtualizedContainerService.HintSize="200,144.8" sap2010:WorkflowViewState.IdRef="Sequence_38">
               <Sequence.Variables>
                 <Variable x:TypeArguments="scg:List(x:String)" Name="not_exists_path_list" />
               </Sequence.Variables>
@@ -191,7 +267,7 @@
                 </If.Else>
               </If>
             </Sequence>
-            <Sequence sap2010:Annotation.AnnotationText="Dictionary型変数｢config｣を生成" DisplayName="Dictinary化" sap:VirtualizedContainerService.HintSize="333.6,112.8" sap2010:WorkflowViewState.IdRef="Sequence_40">
+            <Sequence sap2010:Annotation.AnnotationText="Dictionary型変数｢config｣を生成" DisplayName="Dictinary化" sap:VirtualizedContainerService.HintSize="200,112.8" sap2010:WorkflowViewState.IdRef="Sequence_40">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">False</x:Boolean>
