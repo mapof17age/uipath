@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="解凍_zip" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sic="clr-namespace:System.IO.Compression;assembly=System.IO.Compression.FileSystem" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="解凍_zip" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sic="clr-namespace:System.IO.Compression;assembly=System.IO.Compression.FileSystem" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="myBoolean" Type="InOutArgument(x:Boolean)" />
     <x:Property Name="extractPath" Type="InArgument(x:String)" />
@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>546,769</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>676,3537</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="34">
@@ -48,7 +48,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="22">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="25">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -71,34 +71,260 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>PresentationCore</AssemblyReference>
       <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="解凍_zip" sap:VirtualizedContainerService.HintSize="526,669" sap2010:WorkflowViewState.IdRef="Sequence_134">
+  <Sequence DisplayName="解凍_zip" sap:VirtualizedContainerService.HintSize="656,3437" sap2010:WorkflowViewState.IdRef="Sequence_134">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Boolean" Name="unzip_finished" />
+      <Variable x:TypeArguments="x:String" Name="download_path" />
+      <Variable x:TypeArguments="x:String" Name="myDir" />
+      <Variable x:TypeArguments="x:String" Name="file_name" />
+      <Variable x:TypeArguments="x:String" Name="extension" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <DoWhile DisplayName="待機_ダウンロード完了_zip" sap:VirtualizedContainerService.HintSize="484,405" sap2010:WorkflowViewState.IdRef="DoWhile_5" Condition="[unzip_finished = False]">
-      <Sequence DisplayName="シーケンス" sap:VirtualizedContainerService.HintSize="376,243" sap2010:WorkflowViewState.IdRef="Sequence_133">
-        <Sequence.Variables>
-          <Variable x:TypeArguments="x:String" Name="zip_path" />
-        </Sequence.Variables>
+    <ui:OnUiElementAppear FoundElement="{x:Null}" WaitActive="{x:Null}" WaitVisible="{x:Null}" sap2010:Annotation.AnnotationText="ウィンドウ｢名前をつけて保存｣から｢download_path｣を設定｡保存をクリック｡&#xA;&#xA;3分経過しても表示されない場合はエラー｡" ContinueOnError="False" DisplayName="要素が出現したとき 'chrome.exe  名前を付けて保存'" sap:VirtualizedContainerService.HintSize="614,1039" sap2010:WorkflowViewState.IdRef="OnUiElementAppear_1" RepeatForever="False">
+      <ui:OnUiElementAppear.Body>
+        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,806" sap2010:WorkflowViewState.IdRef="Sequence_136">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="ウィンドウにアタッチ_名前を付けて保存" sap:VirtualizedContainerService.HintSize="434,714" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="979d0fb9e2d1ed2964ff6d9d0eb790db" Selector="&lt;wnd app='chrome.exe' title='名前を付けて保存' /&gt;">
+            <ui:WindowScope.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,568" sap2010:WorkflowViewState.IdRef="Sequence_135">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="ホットキーを押下_del" EmptyField="False" sap:VirtualizedContainerService.HintSize="334,154" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="del" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                    <ui:SendHotkey.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="57101ff79bc25d294cff4ccf44e26947" Selector="&lt;wnd aaname='Explorer ウィンドウ' cls='DirectUIHWND' /&gt;&lt;wnd aaname='ファイル名:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:SendHotkey.Target>
+                  </ui:SendHotkey>
+                  <ui:SetValue ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="設定_download_path" sap:VirtualizedContainerService.HintSize="333.6,135.2" sap2010:WorkflowViewState.IdRef="SetValue_1" Text="[download_path]">
+                    <ui:SetValue.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="57101ff79bc25d294cff4ccf44e26947" Selector="&lt;ctrl name='ファイル名:' role='editable text' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:SetValue.Target>
+                  </ui:SetValue>
+                  <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="クリック_保存" sap:VirtualizedContainerService.HintSize="333.6,107.2" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="42e74585f55561f025136bffd70f89e6" Selector="&lt;wnd ctrlid='1' title='保存(*S)' /&gt;" WaitForReady="INTERACTIVE">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                      </ui:Target>
+                    </ui:Click.Target>
+                  </ui:Click>
+                </Sequence>
+              </ActivityAction>
+            </ui:WindowScope.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:WindowScope>
+        </Sequence>
+      </ui:OnUiElementAppear.Body>
+      <ui:OnUiElementAppear.Target>
+        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="d4aacfe465ae4859e4095a1729776abb" Selector="&lt;wnd app='chrome.exe' cls='#32770' title='名前を付けて保存' /&gt;" TimeoutMS="180000">
+          <ui:Target.WaitForReady>
+            <InArgument x:TypeArguments="ui:WaitForReady" />
+          </ui:Target.WaitForReady>
+        </ui:Target>
+      </ui:OnUiElementAppear.Target>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:OnUiElementAppear>
+    <Sequence DisplayName="待機 ダウンロード完了するまで" sap:VirtualizedContainerService.HintSize="614.4,992.8" sap2010:WorkflowViewState.IdRef="Sequence_141">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="s:DateTime" Name="end_time" />
+        <Variable x:TypeArguments="x:Boolean" Name="unzipped" />
+        <Variable x:TypeArguments="x:Int32" Name="max_minutes" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:MultipleAssign sap2010:Annotation.AnnotationText="最大値max_minutesを過ぎた場合、スローで無限ループを回避するため" DisplayName="複数代入 end_time" sap:VirtualizedContainerService.HintSize="569.6,174.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Int32">[max_minutes]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Int32">10</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="s:DateTime">[end_time]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="s:DateTime">[Now.AddMinutes(max_minutes)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:PathExists DisplayName="パスの有無を確認" Exists="[unzip_finished]" sap:VirtualizedContainerService.HintSize="334,89" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[zip_path]" PathType="File" />
-        <Delay DisplayName="待機" Duration="00:00:03" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
-      </Sequence>
-    </DoWhile>
-    <InvokeMethod DisplayName="メソッドを呼び出し_解凍_zip" sap:VirtualizedContainerService.HintSize="484,132" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="ExtractToDirectory" TargetType="sic:ZipFile">
-      <InArgument x:TypeArguments="x:String">[zipPath]</InArgument>
-      <InArgument x:TypeArguments="x:String">[extractPath]</InArgument>
+      </ui:MultipleAssign>
+      <DoWhile sap2010:Annotation.AnnotationText="zipのダウンロードが完了する前に解凍メソッドを使うとファイルが存在しないため､待機" DisplayName="待機_ダウンロード完了_zip" sap:VirtualizedContainerService.HintSize="569.6,685.6" sap2010:WorkflowViewState.IdRef="DoWhile_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <DoWhile.Condition>[unzipped = False]</DoWhile.Condition>
+        <Sequence DisplayName="シーケンス" sap:VirtualizedContainerService.HintSize="524.8,495.2" sap2010:WorkflowViewState.IdRef="Sequence_133">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:PathExists DisplayName="パスの有無を確認 download_path" Exists="[unzipped]" sap:VirtualizedContainerService.HintSize="483.2,90.4" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[download_path]" PathType="File" />
+          <Delay DisplayName="待機 3秒" Duration="00:00:03" sap:VirtualizedContainerService.HintSize="483.2,22.4" sap2010:WorkflowViewState.IdRef="Delay_4" />
+          <If Condition="[Now &lt; end_time]" DisplayName="条件分岐 max_minutes 分後を過ぎた場合、スロー" sap:VirtualizedContainerService.HintSize="483.2,209.6" sap2010:WorkflowViewState.IdRef="If_2">
+            <If.Else>
+              <Throw DisplayName="スロー時間超過" Exception="[New Exception(max_minutes.ToString + &quot;分以上経過しましたかが、ダウンロードが完了しませんでした｡&quot;)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_1" />
+            </If.Else>
+          </If>
+        </Sequence>
+      </DoWhile>
+    </Sequence>
+    <ui:MultipleAssign sap2010:Annotation.AnnotationText="i/o : download_path&#xA;&#xA;process : &#xA;download_pathをディレクトリ･ファイル名･拡張子に分割&#xA;download_pathの拡張子を取り除いたパスを取得&#xA;" DisplayName="複数代入 download_pathを.zipからフォルダに変更" sap:VirtualizedContainerService.HintSize="614.4,300.8" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[myDir]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[System.IO.Path.GetDirectoryName(download_path)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[file_name]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[System.IO.Path.GetFileNameWithoutExtension(download_path)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[extension]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[System.IO.Path.GetExtension(download_path)]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[download_path]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[myDir + "\" + file_name]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:MultipleAssign>
+    <Sequence sap2010:Annotation.AnnotationText="input : download_path&#xA;&#xA;process : &#xA;download_pathが既に存在していた場合､download_pathのフォルダを削除する" DisplayName="解凍先に同一のフォルダ名があったら､事前に削除" sap:VirtualizedContainerService.HintSize="524.8,536.8" sap2010:WorkflowViewState.IdRef="Sequence_139">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Boolean" Name="download_path_exists" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:PathExists sap2010:Annotation.AnnotationText="output : download_path_exists" DisplayName="パスの有無を確認" Exists="[download_path_exists]" sap:VirtualizedContainerService.HintSize="483.2,118.4" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[download_path]" PathType="Folder">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:PathExists>
+      <If Condition="[Not download_path_exists]" DisplayName="条件分岐" sap:VirtualizedContainerService.HintSize="483.2,209.6" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Else>
+          <ui:Delete ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="input : download_path" DisplayName="削除 download_path" sap:VirtualizedContainerService.HintSize="200,50.4" sap2010:WorkflowViewState.IdRef="Delete_2" Path="[download_path]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:Delete>
+        </If.Else>
+      </If>
+    </Sequence>
+    <InvokeMethod sap2010:Annotation.AnnotationText="input 1 : download_path + extension&#xA;input 2 : download_path&#xA;&#xA;process : input 1を input 2 に解凍" DisplayName="メソッドを呼び出し 解凍_zip" sap:VirtualizedContainerService.HintSize="614.4,208.8" sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="ExtractToDirectory" TargetType="sic:ZipFile">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <InArgument x:TypeArguments="x:String">[download_path + extension]</InArgument>
+      <InArgument x:TypeArguments="x:String">[download_path]</InArgument>
     </InvokeMethod>
+    <ui:Delete ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="input : &#xA;download_path + extension" DisplayName="削除 zipファイル" sap:VirtualizedContainerService.HintSize="614,66" sap2010:WorkflowViewState.IdRef="Delete_1" Path="[download_path + &quot;.&quot; + extension]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:Delete>
   </Sequence>
 </Activity>
